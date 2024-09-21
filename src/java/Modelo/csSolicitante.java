@@ -59,6 +59,24 @@ public class csSolicitante {
     }
     return respuesta;
   }
+    public int eliminarsolicitante (int idsolicitante)
+    {
+    int respuesta=0;
+    csConexion cl = new csConexion();
+    con=cl.conectar();
+    try {
+    stm=con.createStatement();
+    respuesta=stm.executeUpdate("delete from Ticket.dbo.solicitante where idsolicitante= "+ idsolicitante);
+    cl.desconectar();
+    con.close();
+    stm.close();
+    }
+    catch (Exception ex)
+    {
+    
+    }
+    return respuesta;
+    }
    
     public ArrayList<Select_Solicitante> listarSolicitante(){
         
