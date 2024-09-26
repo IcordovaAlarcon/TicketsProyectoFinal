@@ -16,6 +16,24 @@ public class csMotivo {
     private Statement stm;
     private ResultSet rs;
     
+        public int insertar(int idmotivo, String motivo){
+        int respuesta = 0;
+        csConexion c1 = new csConexion();
+        con = c1.conectar();
+        try {
+        stm = con.createStatement();
+        respuesta = stm.executeUpdate("insert into Ticket.dbo.motivo(idmotivo, motivo) "
+                + "values(" + idmotivo + ", '"+ motivo +"')");
+        c1.desconectar();
+        con.close();
+        stm.close();
+        }
+        catch (Exception ex){
+            
+        }
+        return respuesta; 
+        }
+    
     public int actualizarmotivo(int idMotivo, String motivo) {
  int respuesta = 0;
  csConexion cl = new csConexion();
@@ -55,6 +73,8 @@ catch (Exception ex)
 
 return respuesta;
 }
+
+
 
 }
    

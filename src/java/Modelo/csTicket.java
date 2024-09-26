@@ -14,6 +14,9 @@ public class csTicket {
      private Connection con;
     private Statement stm;
     private ResultSet rs;
+    
+    
+    
     public int actualizarTicket(int idTicket, int idUsuario, int idAtencion) {
  int respuesta = 0;
  csConexion cl = new csConexion();

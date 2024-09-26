@@ -6,6 +6,7 @@ package Modelo;
 import java.sql.Connection;
 import java.sql.Statement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 /**
  *
  * @author Aroni
@@ -15,6 +16,26 @@ public class csVentanilla {
     private Connection con;
     private Statement stm;
     private ResultSet rs;
+    
+        public int insertar(int idescritorio, String sistema, int idempleado){
+        int respuesta = 0;
+        csConexion c1 = new csConexion();
+        con = c1.conectar();
+        try {
+        stm = con.createStatement();
+        respuesta = stm.executeUpdate("insert into Ticket.dbo.escritorio(idescritorio, sistema, idempleado) "
+                + "values(" + idescritorio + ", '"+ sistema +"', "+ idempleado +"')");
+        c1.desconectar();
+        con.close();
+        stm.close();
+        }
+        catch (Exception ex){
+            
+        }
+        return respuesta;
+        }
+    
+    
     public int actualizarVentanilla(int idVentanilla, String estado, int idEmpleado, int 
 idTicket) {
  int respuesta = 0;
@@ -51,4 +72,51 @@ idTicket) {
  return respuesta;
 
    } 
+    
+    public int eliminarescritorio (int idescritorio)
+{
+int respuesta=0;
+csConexion cl = new csConexion();
+con=cl.conectar();
+try {
+stm=con.createStatement();
+respuesta = stm.executeUpdate("delete from Ticket.dbo.escritorio where idescritorio="+ idescritorio);
+cl.desconectar();
+con.close();
+stm.close();
+}
+catch (Exception ex)
+{
+}
+    return respuesta;
+ }
+    
+        public ArrayList<Select_Escritorio> listarEscritorio(){
+        
+    Select_Escritorio S = null;
+    ArrayList<Select_Escritorio> lista = new ArrayList<Select_Escritorio>();
+    lista = null;
+    
+    csConexion c1 = new csConexion();
+    con = c1.conectar();
+    rs = null;
+    
+    try{
+        stm = con.createStatement();
+        rs = stm.executeQuery("Select * from Ticket.dbo.escritorio");
+        
+        while(rs.next()){
+        S = new Select_Escritorio(rs.getInt(1), rs.getString("Sistema"), rs.getInt(3));
+        lista.add(S);
+        }
+        c1.desconectar();
+        con.close();
+        stm.close();
+    }
+    catch (Exception ex){
+        
+    }
+    return lista;
+}
+    
 }
